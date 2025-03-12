@@ -1,38 +1,42 @@
 import configparser
-import os
-
 from gui import get_server_selection
 
-
-
-section = "General"
 channels = {
-    1 : {("cps", "hyp_mihoyo"), ("channel", 1), ("_name_", "天空岛 + 米哈游通行证")},
-    2 : {("cps", "bilibili"), ("channel", 14), ("_name_", "天空岛 + 米哈游通行证")},
+    1 : {"cps": "hyp_mihoyo", "channel": 1}, # 天空岛 + 米哈游通行证
+    2 : {"cps": "bilibili", "channel": 14}, # 世界树 + BiliBili账号
 }
 
-def main():
-    user_config = get_server_selection()
-    if user_config == {}:
-        return
+def override(to_be_overrides:dict, section:str = "General") -> None:
     config_file = os.path.join(os.getcwd(), "config.ini")
     config = configparser.ConfigParser()
     if not os.path.exists(config_file):
-        print("Error: config.ini not exists!")
+        print("Error: config.ini not exists!")  # TODO: download one from github
         exit()
     config.read(config_file)
 
-    # if section in config and key in config[section]:
-    #     current_value = config.getint(section, key)
-    #     new_value = 1 if current_value == 14 else 14
-    #     config.set(section, key, str(new_value))
-    #
-    #     with open(config_file, "w") as configfile:
-    #         config.write(configfile)
-    #
-    #     print(f"已将 {key} 值修改为: {new_value}")
-    # else:
-    #     print(f"Error: '{key}' 不存在于 [{section}] 部分")
+    for key, value in to_be_overrides.items():
+        if section in config and key in config[section]:
+            config.set(section, key, str(value))
+        else:
+            print(f"Error: '{key}' not exist in [{section}] 部分")
+
+    with open(config_file, "w") as configfile:
+        config.write(configfile)
+
+
+def start_game():
+    pass
+
+
+def main() -> None:
+    user_selection = get_server_selection()
+    if user_selection == {}:
+        return
+
+    override(channels[user_selection["value"]])
+
+    start_game()
 
 if __name__ == "__main__":
+    import os
     main()
