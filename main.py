@@ -1,4 +1,6 @@
 import configparser
+
+import file_action
 from gui import get_server_selection
 
 channels = {
@@ -7,12 +9,12 @@ channels = {
 }
 
 def override(to_be_overrides:dict, section:str = "General") -> None:
-    config_file = os.path.join(os.getcwd(), "config.ini")
+    config_file_path = os.path.join(os.getcwd(), "config.ini")
+    if not os.path.exists(config_file_path):
+        file_action.download_config_ini(download_path=config_file_path)
+
     config = configparser.ConfigParser()
-    if not os.path.exists(config_file):
-        print("Error: config.ini not exists!")  # TODO: download one from github
-        exit()
-    config.read(config_file)
+    config.read(config_file_path)
 
     for key, value in to_be_overrides.items():
         if section in config and key in config[section]:
@@ -20,7 +22,7 @@ def override(to_be_overrides:dict, section:str = "General") -> None:
         else:
             print(f"Error: '{key}' not exist in [{section}] 部分")
 
-    with open(config_file, "w") as configfile:
+    with open(config_file_path, "w") as configfile:
         config.write(configfile)
 
 
