@@ -68,7 +68,8 @@ def main() -> None:
     override_config_ini(value_selected)
     override_pcgamesdk_dll(value_selected)
 
-    start_game()
+    if user_selection['autoStartGame']:
+        start_game()
 
 if __name__ == "__main__":
     import os
