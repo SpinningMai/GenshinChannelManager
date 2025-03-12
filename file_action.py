@@ -12,7 +12,7 @@ def download_file(url:str, download_path:str):
             file.write(response.content)
 
     except requests.exceptions.RequestException as e:
-        print(f"❌ 下载失败: {e}")
+        print(f"下载失败: {e}")
         exit(1)
 
 def download_config_ini(download_path:str) -> None:

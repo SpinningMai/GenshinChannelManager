@@ -1,4 +1,5 @@
 import configparser
+import subprocess
 
 import file_action
 from gui import get_server_selection
@@ -48,9 +49,15 @@ def override_pcgamesdk_dll(param) -> None:
         pass
 
 
-
 def start_game():
-    pass
+    game_name = "YuanShen.exe"
+    exe_path = os.path.join(os.getcwd(), game_name)
+
+    if os.path.exists(exe_path):
+        subprocess.Popen(exe_path, shell=True)
+    else:
+        print(f"未找到 {game_name}，请检查文件是否存在于当前目录。\n或请把执行文件exe放在与游戏exe相同目录下。")
+
 
 def main() -> None:
     user_selection = get_server_selection()
