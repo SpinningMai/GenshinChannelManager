@@ -5,8 +5,8 @@ import file_action
 from gui import get_server_selection
 
 channels = {
-    1 : {"cps": "hyp_mihoyo", "channel": 1}, # 天空岛 + 米哈游通行证
-    2 : {"cps": "bilibili", "channel": 14}, # 世界树 + BiliBili账号
+    1 : {"cps": "hyp_mihoyo", "channel": 1, "sub_channel": 0}, # 天空岛 + 米哈游通行证
+    2 : {"cps": "bilibili", "channel": 14, "sub_channel": 1}, # 世界树 + BiliBili账号
 }
 
 def override_config_ini(param:int, section:str = "General") -> None:
@@ -74,3 +74,5 @@ def main() -> None:
 if __name__ == "__main__":
     import os
     main()
+
+    # pyinstaller --onefile --noconsole main.py
