@@ -8,7 +8,9 @@ channels = {
     2 : {"cps": "bilibili", "channel": 14}, # 世界树 + BiliBili账号
 }
 
-def override(to_be_overrides:dict, section:str = "General") -> None:
+def override_config_ini(param:int, section:str = "General") -> None:
+    to_be_overrides = channels[param]
+
     config_file_path = os.path.join(os.getcwd(), "config.ini")
     if not os.path.exists(config_file_path):
         file_action.download_config_ini(download_path=config_file_path)
@@ -26,16 +28,38 @@ def override(to_be_overrides:dict, section:str = "General") -> None:
         config.write(configfile)
 
 
+def override_pcgamesdk_dll(param) -> None:
+    pcgamesdk_dll_path = os.path.join(os.getcwd(), "YuanShen_Data", "Plugins", "PCGameSDK.dll")
+    pcgamesdk_dll_disabled_path = pcgamesdk_dll_path + ".disableddll"
+
+    is_pcgamesdk_dll_exists = os.path.exists(pcgamesdk_dll_path)
+    is_pcgamesdk_dll_disabled_exists = os.path.exists(pcgamesdk_dll_disabled_path)
+
+    if param == 1 and is_pcgamesdk_dll_exists:
+            os.rename(pcgamesdk_dll_path, pcgamesdk_dll_disabled_path)
+
+    elif param == 2:
+        if not is_pcgamesdk_dll_exists:
+            if is_pcgamesdk_dll_disabled_exists:
+                os.rename(pcgamesdk_dll_disabled_path, pcgamesdk_dll_path)
+            else:
+                file_action.download_pcgamesdk_dll(download_path=pcgamesdk_dll_path)
+    else:
+        pass
+
+
+
 def start_game():
     pass
-
 
 def main() -> None:
     user_selection = get_server_selection()
     if user_selection == {}:
         return
 
-    override(channels[user_selection["value"]])
+    value_selected = user_selection["value"]
+    override_config_ini(value_selected)
+    override_pcgamesdk_dll(value_selected)
 
     start_game()
 
