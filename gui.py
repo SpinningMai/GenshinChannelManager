@@ -21,20 +21,25 @@ def get_server_selection():
         if selected_server in server_config:
             user_selection["server"] = selected_server
             user_selection["value"] = server_config[selected_server]
+            user_selection["autoStartGame"] = auto_start_game_var.get()
         root.quit()
 
     root = tk.Tk()
-    root.title("原神渠道小助手")
+    root.title("原神切服小助手")
     root.config(padx=10, pady=10)
 
-    center_window(root, 260, 100)
+    center_window(root, 260, 135)
 
     tk.Label(root, text="请选择服务器和渠道:", font=("TkDefaultFont", 10, "bold")).pack(anchor=tk.W)
 
     server_var = tk.StringVar()
     server_dropdown = ttk.Combobox(root, textvariable=server_var, values=list(server_config.keys()), state="readonly")
     server_dropdown.pack(anchor=tk.W, pady=5)
-    server_dropdown.current(0)  # 设置默认选项
+    server_dropdown.current(0)
+
+    auto_start_game_var = tk.BooleanVar(value=True)
+    check_button = tk.Checkbutton(root, text="确定后启动游戏", variable=auto_start_game_var)
+    check_button.pack(anchor=tk.W)
 
     # "Start" button
     submit_button = tk.Button(root, text="确定", command=on_submit)
@@ -43,9 +48,9 @@ def get_server_selection():
     user_selection = {}
     root.mainloop()  # run GUI
 
-    return user_selection  # 返回用户选择的服务器和 IP 地址
+    return user_selection
 
-# 运行 GUI 并获取用户选择
+
 if __name__ == '__main__':
     result = get_server_selection()
     if result:
