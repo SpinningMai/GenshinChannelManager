@@ -4,6 +4,7 @@ from tkinter import ttk
 server_config = {
     "天空岛 + 米哈游通行证": 1,
     "世界树 + BiliBili账号": 2,
+    "tw/hk/mo + HoYoverse通行证": 3,
 }
 
 def center_window(root, width=300, height=150):
@@ -28,7 +29,7 @@ def get_server_selection():
     root.title("原神切服小助手")
     root.config(padx=10, pady=10)
 
-    center_window(root, 260, 135)
+    center_window(root, 300, 135)
 
     tk.Label(root, text="请选择服务器和渠道:", font=("TkDefaultFont", 10, "bold")).pack(anchor=tk.W)
 
