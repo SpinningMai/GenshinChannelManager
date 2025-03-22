@@ -1,11 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
-server_config = {
-    "天空岛 + 米哈游通行证": 1,
-    "世界树 + BiliBili账号": 2,
-    "tw/hk/mo + HoYoverse通行证": 3,
-}
+#Local
+from pdata import server_config
 
 def center_window(root, width=300, height=150):
     screen_width = root.winfo_screenwidth()
