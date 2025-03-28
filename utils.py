@@ -5,6 +5,8 @@ from win32com.client import Dispatch
 
 import downloader
 from pdata import channels, file_name_set
+from pstruct import GameState
+
 
 def override_config_ini(server_id:int, section:str = "General") -> None:
     """
@@ -100,3 +102,26 @@ def get_file_group_id() -> int:
             raise EOFError("Unknown Type Of Launcher")
         file_group_id += 1
     return file_group_id
+
+def get_server_id() -> int:
+
+    config_file_path = os.path.join(os.getcwd(), "games", "Genshin Impact Game", "config.ini")
+    if not os.path.exists(config_file_path):
+        downloader.download_config_ini(download_path=config_file_path)
+
+    config = configparser.ConfigParser()
+    config.read(config_file_path)
+
+    s = config.get("General", 'cps')
+
+    if s == "hyp_mihoyo":
+        return 0
+    else:
+        return 1
+
+
+def get_current_state() -> GameState:
+    current_state = GameState()
+    current_state.channel_idx = get_server_id()
+    current_state.file_name_set_idx = get_file_group_id()
+    return current_state

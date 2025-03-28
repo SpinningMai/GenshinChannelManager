@@ -3,6 +3,8 @@ from tkinter import ttk
 
 #Local
 from pdata import server_config
+from pstruct import GameState
+
 
 def center_window(root, width=300, height=150):
     screen_width = root.winfo_screenwidth()
@@ -13,7 +15,7 @@ def center_window(root, width=300, height=150):
 
     root.geometry(f"{width}x{height}+{x}+{y}")
 
-def get_server_selection():
+def get_server_selection(cur_state:GameState=None):
     def on_submit():
         selected_server = server_var.get()
         if selected_server in server_config:
@@ -33,7 +35,7 @@ def get_server_selection():
     server_var = tk.StringVar()
     server_dropdown = ttk.Combobox(root, textvariable=server_var, values=list(server_config.keys()), state="readonly")
     server_dropdown.pack(anchor=tk.W, pady=5)
-    server_dropdown.current(0)
+    server_dropdown.current(cur_state.channel_idx)
 
     auto_start_game_var = tk.BooleanVar(value=True)
     check_button = tk.Checkbutton(root, text="确定后启动游戏", variable=auto_start_game_var)

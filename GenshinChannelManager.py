@@ -1,17 +1,19 @@
 from gui import get_server_selection
 from pdata import file_name_set
-from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut
+from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut, get_current_state
 
 
 def main() -> None:
+    cur_state = get_current_state()
+
     # 启动GUI，供玩家选择启动项目
-    user_selection = get_server_selection()
+    user_selection = get_server_selection(cur_state)
     if user_selection == {}:
         return
 
     # 定位选择的渠道 和 电脑文件夹名称类型
     server_id:int = user_selection["value"]
-    name_set:dict = file_name_set[get_file_group_id()]
+    name_set:dict = file_name_set[cur_state.file_name_set_idx]
 
     # 复写config.ini和修改PCgameSDK.dll
     override_config_ini(server_id)
