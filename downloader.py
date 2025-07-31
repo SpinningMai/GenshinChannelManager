@@ -8,7 +8,7 @@ from requests import RequestException
 GITHUB_config_ini_URL = "https://cdn.jsdelivr.net/gh/SpinningMai/GenshinChannelManager@main/assets/config.ini"
 GITHUB_PCGameSDK_dll_URL = "https://cdn.jsdelivr.net/gh/SpinningMai/GenshinChannelManager@main/assets/PCGameSDK.dll"
 GITHUB_sdk_pkg_version_URL = "https://cdn.jsdelivr.net/gh/SpinningMai/GenshinChannelManager@main/assets/sdk_pkg_version"
-GITHUB_BLPlatform64_zip_URL = "https://cdn.jsdelivr.net/gh/SpinningMai/GenshinChannelManager@main/assets/BLPlatform64.zip"
+GITHUB_BLPlatform64_zip_URL = "https://raw.githubusercontent.com/SpinningMai/GenshinChannelManager/main/assets/BLPlatform64.zip"
 
 def download_file(url:str, download_path:str):
     try:
@@ -36,7 +36,10 @@ def download_and_extract_BLPlatform64_zip(download_path: str):
     temp_zip = os.path.join(download_path, "temp_repo.zip")
 
     try:
-        response = requests.get(GITHUB_BLPlatform64_zip_URL, stream=True)
+        headers = {
+            "User-Agent": "Mozilla/5.0"  # 模拟浏览器请求
+        }
+        response = requests.get(GITHUB_BLPlatform64_zip_URL, stream=True, headers=headers)
         response.raise_for_status()
 
         with open(temp_zip, 'wb') as f:
