@@ -1,9 +1,6 @@
-from thinc.mypy import plugin
-
 server_config = {
     "天空岛 + 米哈游通行证": 1,
     "世界树 + BiliBili账号": 2,
-    # "tw/hk/mo + HoYoverse通行证": 3,
 }
 
 channels = {
@@ -11,12 +8,12 @@ channels = {
          "sub_channel": 1,
          "cps": "mihoyo PC",
          "uapc": '{"hk4e_cn":{"uapc":""},"hyp":{"uapc":""}}',
-         "plugin sdk version": ""}, # 天空岛 + 米哈游通行证
+         "plugin_sdk_version": ""}, # 天空岛 + 米哈游通行证
     2 : {"channel": 14,
          "sub_channel": 0,
          "cps": "bilibili",
          "uapc": '{"hk4e_cn":{"uapc":""},"hyp":{"uapc":""}}',
-         "plugin sdk version": "5.0.4"}, # 世界树 + BiliBili账号
+         "plugin_sdk_version": "5.0.4"}, # 世界树 + BiliBili账号
 }
 
 file_name_set ={

@@ -1,6 +1,7 @@
 from gui import get_server_selection
 from pdata import file_name_set
-from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut, get_current_state, edit_sdk_pkg_version
+from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut, \
+    get_current_state, edit_sdk_pkg_version, edit_blplatform64_zip
 
 
 def main() -> None:
@@ -19,6 +20,7 @@ def main() -> None:
     override_config_ini(server_id)
     edit_pcgamesdk_dll(server_id, name_set)
     edit_sdk_pkg_version(server_id, name_set)
+    edit_blplatform64_zip(server_id, name_set)
     ensure_shortcut(name_set)
 
     # 启动游戏

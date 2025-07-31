@@ -58,11 +58,6 @@ def edit_pcgamesdk_dll(server_id:int, name_set:dict) -> None:
         pass
 
 def edit_sdk_pkg_version(server_id:int, name_set:dict) -> None:
-    """
-    To enable or disable the PCgameSDK.dll according to the server_id selected.
-    :param server_id: the id of server/channel selected.
-    :param name_set: the string names of the local folders
-    """
     sdk_pkg_version_path = os.path.join(os.getcwd(), "games", "Genshin Impact Game", "sdk_pkg_version")
 
     is_sdk_pkg_version_exists = os.path.exists(sdk_pkg_version_path)
@@ -73,6 +68,21 @@ def edit_sdk_pkg_version(server_id:int, name_set:dict) -> None:
     elif server_id == 2:
         if not is_sdk_pkg_version_exists:
             downloader.download_sdk_pkg_version(download_path=sdk_pkg_version_path)
+    else:
+        pass
+
+def edit_blplatform64_zip(server_id:int, name_set:dict) -> None:
+    blplatform64_folder_path = os.path.join(os.getcwd(), "games", "Genshin Impact Game",
+                                      name_set["_Data_folder"], "Plugins")
+
+    is_blplatform64_folder_exists = os.path.exists(os.path.join(blplatform64_folder_path, "BLPlatform64"))
+
+    if (server_id == 1) and is_blplatform64_folder_exists:
+        pass
+
+    elif server_id == 2:
+        if not is_blplatform64_folder_exists:
+            downloader.download_and_extract_BLPlatform64_zip(download_path=blplatform64_folder_path)
     else:
         pass
 
@@ -132,7 +142,7 @@ def get_server_id() -> int:
 
     s = config.get("General", 'cps')
 
-    if s == "hyp_mihoyo":
+    if s == channels[1]["cps"]:
         return 0
     else:
         return 1
