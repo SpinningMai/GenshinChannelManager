@@ -1,6 +1,6 @@
 from gui import get_server_selection
 from pdata import file_name_set
-from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut, get_current_state
+from utils import override_config_ini, edit_pcgamesdk_dll, start_game, get_file_group_id, ensure_shortcut, get_current_state, edit_sdk_pkg_version
 
 
 def main() -> None:
@@ -15,9 +15,10 @@ def main() -> None:
     server_id:int = user_selection["value"]
     name_set:dict = file_name_set[cur_state.file_name_set_idx]
 
-    # 复写config.ini和修改PCgameSDK.dll
+    # 复写config.ini, 修改PCgameSDK.dll和下载sdk_pkg_version
     override_config_ini(server_id)
     edit_pcgamesdk_dll(server_id, name_set)
+    edit_sdk_pkg_version(server_id, name_set)
     ensure_shortcut(name_set)
 
     # 启动游戏

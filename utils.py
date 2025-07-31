@@ -32,7 +32,6 @@ def override_config_ini(server_id:int, section:str = "General") -> None:
     with open(config_file_path, "w") as configfile:
         config.write(configfile)
 
-
 def edit_pcgamesdk_dll(server_id:int, name_set:dict) -> None:
     """
     To enable or disable the PCgameSDK.dll according to the server_id selected.
@@ -46,7 +45,7 @@ def edit_pcgamesdk_dll(server_id:int, name_set:dict) -> None:
     is_pcgamesdk_dll_exists = os.path.exists(pcgamesdk_dll_path)
     is_pcgamesdk_dll_disabled_exists = os.path.exists(pcgamesdk_dll_disabled_path)
 
-    if (server_id == 1 or server_id == 3) and is_pcgamesdk_dll_exists:
+    if (server_id == 1) and is_pcgamesdk_dll_exists:
             os.rename(pcgamesdk_dll_path, pcgamesdk_dll_disabled_path)
 
     elif server_id == 2:
@@ -55,6 +54,25 @@ def edit_pcgamesdk_dll(server_id:int, name_set:dict) -> None:
                 os.rename(pcgamesdk_dll_disabled_path, pcgamesdk_dll_path)
             else:
                 downloader.download_pcgamesdk_dll(download_path=pcgamesdk_dll_path)
+    else:
+        pass
+
+def edit_sdk_pkg_version(server_id:int, name_set:dict) -> None:
+    """
+    To enable or disable the PCgameSDK.dll according to the server_id selected.
+    :param server_id: the id of server/channel selected.
+    :param name_set: the string names of the local folders
+    """
+    sdk_pkg_version_path = os.path.join(os.getcwd(), "games", "Genshin Impact Game", "sdk_pkg_version")
+
+    is_sdk_pkg_version_exists = os.path.exists(sdk_pkg_version_path)
+
+    if (server_id == 1) and is_sdk_pkg_version_exists:
+        pass
+
+    elif server_id == 2:
+        if not is_sdk_pkg_version_exists:
+            downloader.download_sdk_pkg_version(download_path=sdk_pkg_version_path)
     else:
         pass
 
@@ -118,7 +136,6 @@ def get_server_id() -> int:
         return 0
     else:
         return 1
-
 
 def get_current_state() -> GameState:
     current_state = GameState()
