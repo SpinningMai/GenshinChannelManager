@@ -24,6 +24,13 @@ def get_server_selection(cur_state:GameState=None):
             user_selection["autoStartGame"] = auto_start_game_var.get()
         root.quit()
 
+    def update_countdown(countdown_seconds):
+        if countdown_seconds > 0:
+            submit_button.config(text=f"确定({countdown_seconds}秒)")
+            root.after(1000, update_countdown, countdown_seconds - 1)
+        else:
+            on_submit()
+
     root = tk.Tk()
     root.title("原神切服小助手")
     root.config(padx=10, pady=10)
@@ -41,11 +48,15 @@ def get_server_selection(cur_state:GameState=None):
     check_button = tk.Checkbutton(root, text="确定后启动游戏", variable=auto_start_game_var)
     check_button.pack(anchor=tk.W)
 
-    # "Start" button
-    submit_button = tk.Button(root, text="确定", command=on_submit)
+    # "Start" button with initial countdown text
+    submit_button = tk.Button(root, text="确定(5秒)", command=on_submit)
     submit_button.pack(pady=(10, 0))
 
     user_selection = {}
+
+    # Count down
+    root.after(1000, update_countdown, 4)
+
     root.mainloop()  # run GUI
 
     return user_selection
